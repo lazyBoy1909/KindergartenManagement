@@ -10,4 +10,6 @@ public interface StudentService {
 	public Boolean changeStudentInfor(Student student);
 	public Boolean addNewStudent(Student student);
 	public Student getStudentInfor(UUID studentID);
+	public void deleteStudent(UUID studentID);
+	public Student getChildStudentInfor();
 }

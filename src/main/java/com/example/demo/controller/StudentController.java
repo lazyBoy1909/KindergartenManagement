@@ -7,6 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,14 +37,14 @@ public class StudentController {
 	@Autowired
 	StudentService studentService;
 	@GetMapping(path = "/allStudentInfor")
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TEACHER','ROLE_PARENT')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TEACHER')")
 	public ResponseEntity<?> getAllStudentInfor()
 	{
 		return  ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Successful", "All students' information", studentService.getAllStudentInfor()));
 	} 
 	
 	@PutMapping(path = "/changeStudentInfor")
-	@PreAuthorize("hasRole('ROLE_TEACHER')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TEACHER')")
 	public ResponseEntity<?> changeStudentInfor(@RequestBody Student student)
 	{
 		if(studentService.changeStudentInfor(student))
@@ -57,7 +58,7 @@ public class StudentController {
 	}
 	
 	@PostMapping(path = "/addNewStudent")
-	@PreAuthorize("hasRole('ROLE_TEACHER')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TEACHER')")
 	public ResponseEntity<?> addNewStudent(@RequestBody Student student)
 	{
 		if(studentService.addNewStudent(student))
@@ -71,7 +72,7 @@ public class StudentController {
 	}
 	
 	@GetMapping(path = "/getStudentInfor")
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TEACHER','ROLE_PARENT')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TEACHER')")
 	public ResponseEntity<?> getStudentInfor(@RequestParam("studentID") UUID studentID)
 	{
 		Student student;
@@ -84,4 +85,12 @@ public class StudentController {
 			return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Failed", "No student",null));
 		}
 	} 
+	
+	@DeleteMapping(path ="/deleteStudent")
+	@PreAuthorize("hasRole('ROLE_TEACHER')")
+	public ResponseEntity<?> deleteStudent(@RequestParam("studentID") UUID studentID)
+	{
+		studentService.deleteStudent(studentID);
+		return  ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Successful", "delete student successfully", null));
+	}
 }

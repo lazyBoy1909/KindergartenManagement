@@ -23,6 +23,7 @@ import com.example.demo.model.Teacher;
 import com.example.demo.model.TimeTable;
 import com.example.demo.repository.AccountRepository;
 import com.example.demo.repository.TeacherRepository;
+import com.example.demo.service.ParentService;
 import com.example.demo.service.TeacherService;
 import com.example.demo.service.TimeTableService;
 
@@ -34,6 +35,10 @@ public class TeacherController {
 	
 	@Autowired
 	TimeTableService timeTableService;
+	
+	@Autowired
+	ParentService parentService;
+	
     @GetMapping(path ="/teacherInfor")
     @PreAuthorize("hasRole('ROLE_TEACHER')")
     public ResponseEntity<?> getTeacherInfor()
@@ -95,5 +100,12 @@ public class TeacherController {
     	{
     		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Failed", "Invalid Input", false));
     	}
+    }
+    
+    @GetMapping(path = "/getParent")
+    @PreAuthorize("hasAnyRole('ROLE_TEACHER','ROLE_ADMIN')")
+    public ResponseEntity<?> getParentByClassID(@RequestParam("classID") UUID classID)
+    {
+    	return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Successful", "List Parent in class ", parentService.getParentByClassID(classID)));
     }
 }

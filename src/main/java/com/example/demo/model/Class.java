@@ -24,4 +24,33 @@ public class Class {
 	private String className;
 	@Column(name = "teacher_id")
 	private UUID teacherID;
+	public UUID getClassID() {
+		return classID;
+	}
+	public void setClassID(UUID classID) {
+		this.classID = classID;
+	}
+	public String getClassName() {
+		return className;
+	}
+	public void setClassName(String className) {
+		this.className = className;
+	}
+	public UUID getTeacherID() {
+		return teacherID;
+	}
+	public void setTeacherID(UUID teacherID) {
+		this.teacherID = teacherID;
+	}
+	public Class(UUID classID, String className, UUID teacherID) {
+		super();
+		this.classID = classID;
+		this.className = className;
+		this.teacherID = teacherID;
+	}
+	public Class() {
+		super();
+	}
+	
+	
 }

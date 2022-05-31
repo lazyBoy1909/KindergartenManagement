@@ -5,9 +5,12 @@ import java.util.NoSuchElementException;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.Student;
+import com.example.demo.repository.AccountRepository;
 import com.example.demo.repository.ClassRepository;
 import com.example.demo.repository.ParentRepository;
 import com.example.demo.repository.StudentRepository;
@@ -25,6 +28,7 @@ public class StudentServiceImplement implements StudentService {
 	@Autowired
 	ParentRepository parentRepository;
 	@Autowired
+	AccountRepository accountRepository;
 	public List<Student> getAllStudentInfor() {
 		List<Student> listStudents = studentRepository.findAll();
 		return listStudents;
@@ -110,6 +114,17 @@ public class StudentServiceImplement implements StudentService {
 			e.printStackTrace();
 		}
 		return student;
+	}
+	@Override
+	public void deleteStudent(UUID studentID) {
+		studentRepository.deleteById(studentID);
+	}
+	@Override
+	public Student getChildStudentInfor() {
+    	Authentication userDetails = (Authentication) SecurityContextHolder.getContext().getAuthentication();
+    	String username = userDetails.getName();
+    	UUID parentID = accountRepository.getAccountByUsername(username).getUserID();
+    	return studentRepository.findStudentByParentID(parentID).get(0);
 	}
 
 }
