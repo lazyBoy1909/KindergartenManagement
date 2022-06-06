@@ -83,4 +83,11 @@ public class AdminController {
 		return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Successful", "All parents' information", parentService.getAllParents()));
 
 	}
+	
+	@GetMapping(path = "/getClasses")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<?> getAllClasses()
+	{
+		return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Successfull", "All Classes", classService.getAllClasses()));
+	}
 }

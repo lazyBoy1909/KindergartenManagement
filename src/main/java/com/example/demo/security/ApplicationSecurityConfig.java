@@ -15,10 +15,15 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 import javax.crypto.SecretKey;
+import javax.servlet.http.HttpServletRequest;
 
 import static com.example.demo.security.ApplicationUserRole.*;
+
+import java.util.Collections;
 
 
 @Configuration
@@ -45,6 +50,18 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+		        .cors().configurationSource(new CorsConfigurationSource() {
+					@Override
+					public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+		                CorsConfiguration config = new CorsConfiguration();
+		                config.setAllowedHeaders(Collections.singletonList("*"));
+		                config.setAllowedMethods(Collections.singletonList("*"));
+		                config.addAllowedOrigin("*");
+		                config.setAllowCredentials(true);
+		                return config;
+					}
+		        })
+                .and()
                 .csrf().disable()
                 .sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

@@ -91,9 +91,7 @@ public class ClassServiceImplement implements ClassService {
     	Authentication userDetails = (Authentication) SecurityContextHolder.getContext().getAuthentication();
     	String username = userDetails.getName();
     	UUID parentID = accountRepository.getAccountByUsername(username).getUserID();
-    	System.out.println(parentID);
     	Student student =  studentRepository.findStudentByParentID(parentID).get(0);
-    	System.out.println(student.getStudentID());
     	return classRepository.getClassByStudentID(student.getStudentID());
 	}
 
