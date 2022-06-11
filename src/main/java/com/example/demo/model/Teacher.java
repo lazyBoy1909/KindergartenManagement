@@ -28,9 +28,53 @@ public class Teacher {
 	private String subject;
 	@Column(name = "teacher_address")
 	private String teacherAddress;
+	@Column(name = "teacher_gender")
+	private int teacherGender;
+	@Column(name = "teacher_email")
+	private String teacherEmail;
+	@Column(name = "teacher_phone_number")
+	private String teacherPhoneNumber;
 	public Teacher() {
 		super();
 	}
+	
+	
+	public int getTeacherGender() {
+		return teacherGender;
+	}
+
+
+
+	public void setTeacherGender(int teacherGender) {
+		this.teacherGender = teacherGender;
+	}
+
+
+
+	public String getTeacherEmail() {
+		return teacherEmail;
+	}
+
+
+
+	public void setTeacherEmail(String teacherEmail) {
+		this.teacherEmail = teacherEmail;
+	}
+
+
+
+	public String getTeacherPhoneNumber() {
+		return teacherPhoneNumber;
+	}
+
+
+
+	public void setTeacherPhoneNumber(String teacherPhoneNumber) {
+		this.teacherPhoneNumber = teacherPhoneNumber;
+	}
+
+
+
 	public UUID getTeacherID() {
 		return teacherID;
 	}

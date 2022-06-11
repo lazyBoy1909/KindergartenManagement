@@ -21,4 +21,5 @@ public class NotificationController {
 	{
 		return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Successful", "Role of user", accountService.getRole()));
 	}
+	
 }

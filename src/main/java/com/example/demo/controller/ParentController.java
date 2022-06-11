@@ -7,13 +7,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.model.Email;
 import com.example.demo.model.ResponseObject;
 import com.example.demo.model.Student;
 import com.example.demo.model.Tuition;
+import com.example.demo.service.EmailService;
 import com.example.demo.service.StudentService;
 import com.example.demo.service.TuitionService;
 
@@ -21,6 +25,8 @@ import com.example.demo.service.TuitionService;
 @RequestMapping("/parent")
 public class ParentController {
 	
+	@Autowired
+	EmailService emailService;
 	@Autowired
 	TuitionService tuitionService;
 	@Autowired
@@ -55,4 +61,18 @@ public class ParentController {
 		}
 	}
 	
+	@PostMapping(path = "/emails")
+	@PreAuthorize("hasRole('ROLE_PARENT')")
+    public ResponseEntity<?> sendEmail(@RequestBody Email email)
+    {
+    	if(emailService.sendEmailForParent(email))
+    	{
+        	return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Successful", "Send email successfully ", true));
+    	}
+    	else
+    	{
+        	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Successful", "List Parent in class ", false));
+
+    	}
+    }
 }

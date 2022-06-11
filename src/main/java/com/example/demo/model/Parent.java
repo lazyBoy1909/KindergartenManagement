@@ -26,6 +26,11 @@ public class Parent {
 	private int parentAge;
 	@Column(name = "parent_address")
 	private String parentAddress;
+	@Column(name = "parent_email")
+	private String parentEmail;
+	
+	
+	
 	public UUID getParentID() {
 		return parentID;
 	}
@@ -50,12 +55,20 @@ public class Parent {
 	public void setParentAddress(String parentAddress) {
 		this.parentAddress = parentAddress;
 	}
-	public Parent(UUID parentID, String parentName, int parentAge, String parentAddress) {
+	
+	public String getParentEmail() {
+		return parentEmail;
+	}
+	public void setParentEmail(String parentEmail) {
+		this.parentEmail = parentEmail;
+	}
+	public Parent(UUID parentID, String parentName, int parentAge, String parentAddress, String parentEmail) {
 		super();
 		this.parentID = parentID;
 		this.parentName = parentName;
 		this.parentAge = parentAge;
 		this.parentAddress = parentAddress;
+		this.parentEmail = parentEmail;
 	}
 	public Parent() {
 		super();
