@@ -1,7 +1,0 @@
-﻿Host: ec2-34-227-120-79.compute-1.amazonaws.com
-Database: d1irq01qvcb1sm
-User: qqduhfmccexfim
-Port: 5432
-Password: 705a2bc529291e149132e52b5259a217e92d6ea1369633d1579eb03f2d1f277e
-URI: postgres://qqduhfmccexfim:705a2bc529291e149132e52b5259a217e92d6ea1369633d1579eb03f2d1f277e@ec2-34-227-120-79.compute-1.amazonaws.com:5432/d1irq01qvcb1sm
-Heroku CLI: heroku pg:psql postgresql-tapered-96054 --app kindergarten-management
