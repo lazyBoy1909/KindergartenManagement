@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import java.util.Date;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -22,8 +23,8 @@ public class Teacher {
 	private UUID teacherID;
 	@Column(name = "teacher_name")
 	private String teacherName;
-	@Column(name = "teacher_age")
-	private int teacherAge;
+	@Column(name = "teacher_dob")
+	private Date teacherDob;
 	@Column(name = "subject")
 	private String subject;
 	@Column(name = "teacher_address")
@@ -37,44 +38,6 @@ public class Teacher {
 	public Teacher() {
 		super();
 	}
-	
-	
-	public int getTeacherGender() {
-		return teacherGender;
-	}
-
-
-
-	public void setTeacherGender(int teacherGender) {
-		this.teacherGender = teacherGender;
-	}
-
-
-
-	public String getTeacherEmail() {
-		return teacherEmail;
-	}
-
-
-
-	public void setTeacherEmail(String teacherEmail) {
-		this.teacherEmail = teacherEmail;
-	}
-
-
-
-	public String getTeacherPhoneNumber() {
-		return teacherPhoneNumber;
-	}
-
-
-
-	public void setTeacherPhoneNumber(String teacherPhoneNumber) {
-		this.teacherPhoneNumber = teacherPhoneNumber;
-	}
-
-
-
 	public UUID getTeacherID() {
 		return teacherID;
 	}
@@ -87,11 +50,11 @@ public class Teacher {
 	public void setTeacherName(String teacherName) {
 		this.teacherName = teacherName;
 	}
-	public int getTeacherAge() {
-		return teacherAge;
+	public Date getTeacherDob() {
+		return teacherDob;
 	}
-	public void setTeacherAge(int teacherAge) {
-		this.teacherAge = teacherAge;
+	public void setTeacherDob(Date teacherDob) {
+		this.teacherDob = teacherDob;
 	}
 	public String getSubject() {
 		return subject;
@@ -105,5 +68,37 @@ public class Teacher {
 	public void setTeacherAddress(String teacherAddress) {
 		this.teacherAddress = teacherAddress;
 	}
+	public int getTeacherGender() {
+		return teacherGender;
+	}
+	public void setTeacherGender(int teacherGender) {
+		this.teacherGender = teacherGender;
+	}
+	public String getTeacherEmail() {
+		return teacherEmail;
+	}
+	public void setTeacherEmail(String teacherEmail) {
+		this.teacherEmail = teacherEmail;
+	}
+	public String getTeacherPhoneNumber() {
+		return teacherPhoneNumber;
+	}
+	public void setTeacherPhoneNumber(String teacherPhoneNumber) {
+		this.teacherPhoneNumber = teacherPhoneNumber;
+	}
+	public Teacher(UUID teacherID, String teacherName, Date teacherDob, String subject, String teacherAddress,
+			int teacherGender, String teacherEmail, String teacherPhoneNumber) {
+		super();
+		this.teacherID = teacherID;
+		this.teacherName = teacherName;
+		this.teacherDob = teacherDob;
+		this.subject = subject;
+		this.teacherAddress = teacherAddress;
+		this.teacherGender = teacherGender;
+		this.teacherEmail = teacherEmail;
+		this.teacherPhoneNumber = teacherPhoneNumber;
+	}
+	
+
 	
 }

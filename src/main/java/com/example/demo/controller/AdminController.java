@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.model.Activity;
 import com.example.demo.model.Class;
 import com.example.demo.model.ResponseObject;
+import com.example.demo.model.Teacher;
 import com.example.demo.service.ActivityService;
 import com.example.demo.service.ClassService;
 import com.example.demo.service.ParentService;
+import com.example.demo.service.TeacherService;
 
 @RestController
 @RequestMapping("/admin")
@@ -32,7 +34,8 @@ public class AdminController {
 	ClassService classService;
 	@Autowired
 	ParentService parentService;
-	
+	@Autowired
+	TeacherService teacherService;
 	
 	@PostMapping(path = "/addNewClass")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -89,5 +92,50 @@ public class AdminController {
 	public ResponseEntity<?> getAllClasses()
 	{
 		return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Successfull", "All Classes", classService.getAllClasses()));
+	}
+	
+	@GetMapping(path = "/getAllTeachers")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<?> getAllTeachers()
+	{
+		return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Successful", "All Teachers", teacherService.getAllTeacher()));
+	}
+	
+	@PostMapping(path = "/addNewTeacher")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<?> addNewTeacher(@RequestBody Teacher newTeacher)
+	{
+		if(teacherService.addNewTeacher(newTeacher))
+		{
+			return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Successful", "Add new teacher successfully", true));
+		}
+		else return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Failed", "Failed to add new teacher", false));
+	}
+	
+	@PutMapping(path = "/updateTeacher")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<?> updateTeacher(@RequestParam("teacherID") UUID teacherID, @RequestBody Teacher teacher)
+	{
+		if(teacherService.updateTeacher(teacherID, teacher))
+		{
+			return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Successful", "update teacher successfully", true));
+		}
+		else return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Failed", "Failed to update teacher", false));
+	}
+	
+	@DeleteMapping(path = "/deleteTeacher")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<?> deleteTeacher(@RequestParam("teacherID") UUID teacherID)
+	{
+		if(teacherService.deleteTeacher(teacherID))
+		{
+			return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Successful", "delete teacher successfully", true));
+
+		}
+		else
+		{
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Failed", "Failed to delete teacher", false));
+
+		}
 	}
 }
