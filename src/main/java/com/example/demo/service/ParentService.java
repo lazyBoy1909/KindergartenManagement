@@ -8,4 +8,5 @@ import com.example.demo.model.Parent;
 public interface ParentService {
 	public List<Parent> getAllParents();
 	public List<Parent> getParentByClassID(UUID classID);
+	public Parent getParentByID(UUID parentID);
 }

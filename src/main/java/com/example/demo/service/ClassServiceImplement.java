@@ -95,4 +95,18 @@ public class ClassServiceImplement implements ClassService {
     	return classRepository.getClassByStudentID(student.getStudentID());
 	}
 
+	@Override
+	public Class getClassByID(UUID classID) {
+		try
+		{
+			Class foundClass = classRepository.findById(classID).get();
+			return foundClass;
+		}
+		catch(NoSuchElementException e)
+		{
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 }

@@ -12,4 +12,5 @@ public interface ClassService {
 	public Boolean deleteClass(UUID classID);
 	public Boolean updateClass(Class updateClass);
 	public Class getChildClass();
+	public Class getClassByID(UUID classID);
 }

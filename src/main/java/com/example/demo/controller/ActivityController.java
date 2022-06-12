@@ -57,4 +57,21 @@ public class ActivityController {
 	{
 		return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Successful", "Activities", activityService.getActivity()));
 	}
+	
+	@GetMapping(path = "/getActivity")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TEACHER','ROLE_PARENT')")
+	public ResponseEntity<?> getActivityByID(@RequestParam("activityID") UUID activityID)
+	{
+		Activity activity = activityService.getActivityByID(activityID);
+		if(activity != null)
+		{
+			return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Successful", "Activitiy's information", activity));
+
+		}
+		else
+		{
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Failed", "Invalid input", activity));
+
+		}
+	}
 }

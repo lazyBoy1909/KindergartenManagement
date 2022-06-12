@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.Email;
+import com.example.demo.model.Parent;
 import com.example.demo.model.ResponseObject;
 import com.example.demo.model.Student;
 import com.example.demo.model.Tuition;
 import com.example.demo.service.EmailService;
+import com.example.demo.service.ParentService;
 import com.example.demo.service.StudentService;
 import com.example.demo.service.TuitionService;
 
@@ -31,6 +33,8 @@ public class ParentController {
 	TuitionService tuitionService;
 	@Autowired
 	StudentService studentService;
+	@Autowired
+	ParentService parentService;
 	@GetMapping(path = "/getTuition")
 	@PreAuthorize("hasRole('ROLE_PARENT')")
 	public ResponseEntity<?> getTuition()
@@ -71,8 +75,25 @@ public class ParentController {
     	}
     	else
     	{
-        	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Successful", "List Parent in class ", false));
+        	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Failed", "List Parent in class ", false));
 
     	}
     }
+	
+	@GetMapping(path = "/getParent")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<?> getParentByID(@RequestParam("parentID") UUID parentID)
+	{
+		Parent parent = parentService.getParentByID(parentID);
+		if(parent != null)
+		{
+        	return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Successful", "parent's information ", parent));
+
+		}
+		else
+		{
+        	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Failed", "Invalid input ", parent));
+
+		}
+	}
 }

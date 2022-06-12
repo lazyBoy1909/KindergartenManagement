@@ -45,5 +45,18 @@ public class ParentServiceImplement implements ParentService {
 		}
 		return listParent;
 	}
+	@Override
+	public Parent getParentByID(UUID parentID) {
+		try
+		{
+			Parent parent = parentRepository.findById(parentID).get();
+			return parent;
+		}
+		catch(NoSuchElementException e)
+		{
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 }

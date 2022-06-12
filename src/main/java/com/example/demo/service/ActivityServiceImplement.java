@@ -40,5 +40,18 @@ public class ActivityServiceImplement implements ActivityService {
 	public List<Activity> getActivity() {
 		return activityRepository.findAll();
 	}
+	@Override
+	public Activity getActivityByID(UUID activityID) {
+		try
+		{
+			Activity activity = activityRepository.findById(activityID).get();
+			return activity;
+		}
+		catch(NoSuchElementException e)
+		{
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 }
