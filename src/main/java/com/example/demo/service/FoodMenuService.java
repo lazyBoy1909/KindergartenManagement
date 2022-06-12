@@ -10,4 +10,5 @@ public interface FoodMenuService {
 	public List<FoodMenu> getFoodMenu(Date timeStart, Date timeEnd);
 	public int addFoodMenu(FoodMenu foodMenu);
 	public Boolean deleteFoodMenu(UUID foodMenuID);
+	public FoodMenu getFoodMenuByID(UUID foodMenuID);
 }

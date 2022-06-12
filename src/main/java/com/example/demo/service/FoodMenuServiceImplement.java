@@ -3,6 +3,7 @@ package com.example.demo.service;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,19 @@ public class FoodMenuServiceImplement implements FoodMenuService {
 	public Boolean deleteFoodMenu(UUID foodMenuID) {
 		foodMenuRepository.deleteById(foodMenuID);
 		return true;
+	}
+	@Override
+	public FoodMenu getFoodMenuByID(UUID foodMenuID) {
+		try
+		{
+			FoodMenu foodMenu = foodMenuRepository.findById(foodMenuID).get();
+			return foodMenu;
+		}
+		catch(NoSuchElementException e)
+		{
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }

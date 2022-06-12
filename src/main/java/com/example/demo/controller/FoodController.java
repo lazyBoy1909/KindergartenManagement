@@ -58,4 +58,21 @@ public class FoodController {
 		foodMenuService.deleteFoodMenu(foodMenuID);
 		return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Successful", "Delete menu successfully",true));
 	}
+	
+	@GetMapping(path ="/getMenuFoodByID")
+	@PreAuthorize("hasAnyRole('ROLE_TEACHER','ROLE_PARENT', 'ROLE_ADMIN')")
+	public ResponseEntity<?> getMenuFoodByID(@RequestParam("foodMenuID") UUID foodMenuID)
+	{
+		FoodMenu foodMenu = foodMenuService.getFoodMenuByID(foodMenuID);
+		if(foodMenu != null)
+		{
+			return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Successful", "Food Menu's information",foodMenu));
+
+		}
+		else
+		{
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Failed", "Invalid input",foodMenu));
+
+		}
+	}
 }
