@@ -12,4 +12,6 @@ public interface TeacherService {
 	public Boolean addNewTeacher(Teacher teacher);
 	public Boolean deleteTeacher(UUID teacherID);
 	public Boolean updateTeacher(UUID teacherID, Teacher teacher);
+	public int numberOfStudent(UUID teacherID);
+	public Teacher getTeacher(UUID teacherID);
 }

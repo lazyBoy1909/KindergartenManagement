@@ -9,8 +9,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.model.Teacher;
+import com.example.demo.model.*;
+import com.example.demo.model.Class;
 import com.example.demo.repository.AccountRepository;
+import com.example.demo.repository.ClassRepository;
+import com.example.demo.repository.StudentRepository;
 import com.example.demo.repository.TeacherRepository;
 
 @Service
@@ -19,6 +22,11 @@ public class TeacherServiceImplement implements TeacherService {
 	TeacherRepository teacherRepository;
 	@Autowired
 	AccountRepository accountRepository;
+	@Autowired
+	ClassRepository classRepository;
+	@Autowired
+	StudentRepository studentRepository;
+	
 	@Override
 	public Teacher getTeacherInforByUsername() {
     	Authentication userDetails = (Authentication) SecurityContextHolder.getContext().getAuthentication();
@@ -63,6 +71,25 @@ public class TeacherServiceImplement implements TeacherService {
 		{
 			e.printStackTrace();
 			return false;
+		}
+	}
+	@Override
+	public int numberOfStudent(UUID teacherID) {
+		Class foundClass = classRepository.getClassIDByTeacherID(teacherID).get(0);
+		System.out.println(foundClass.getClassName());
+		List<Student> listStudents = studentRepository.findStudentByClassID(foundClass.getClassID());
+		return listStudents.size();
+	}
+	@Override
+	public Teacher getTeacher(UUID teacherID) {
+		try {
+			Teacher teacher = teacherRepository.findById(teacherID).get();
+			return teacher;
+		}
+		catch(NoSuchElementException e)
+		{
+			e.printStackTrace();
+			return null;
 		}
 	}
 

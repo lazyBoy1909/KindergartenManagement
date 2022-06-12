@@ -138,4 +138,26 @@ public class AdminController {
 
 		}
 	}
+	
+	@GetMapping(path = "/studentNumber")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<?> numberStudent(@RequestParam("teacherID") UUID teacherID)
+	{
+		return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Successful", "number of students", teacherService.numberOfStudent(teacherID)));
+	}
+	
+	@GetMapping(path = "/getTeacher")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<?> getTeacher(@RequestParam("teacherID") UUID teacherID)
+	{
+		Teacher teacher = teacherService.getTeacher(teacherID);
+		if(teacher != null)
+		{
+			return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Successful", "Teacher's information", teacher));
+		}
+		else
+		{
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Failed", "No teacher", teacher));
+		}
+	}
 }
