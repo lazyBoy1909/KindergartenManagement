@@ -109,4 +109,11 @@ public class ClassServiceImplement implements ClassService {
 		}
 	}
 
+	@Override
+	public Class getClassByTeacherID(UUID teacherID) {
+		List<Class> listClasses = classRepository.getClassIDByTeacherID(teacherID);
+		if(listClasses.size() == 0) return null;
+		else return classRepository.getClassIDByTeacherID(teacherID).get(0);
+	}
+
 }

@@ -51,4 +51,19 @@ public class ClassController {
 
 		}
 	}
+	
+	@GetMapping(path = "/getClassByTeacher")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<?> getClassByTeacherID(@RequestParam("teacherID") UUID teacherID)
+	{
+		Class foundClass = classService.getClassByTeacherID(teacherID);
+		if(foundClass != null)
+		{
+			return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Successful", "Class's information", foundClass));
+		}
+		else
+		{
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Failed", "Invalid input", foundClass));
+		}
+	}
 }
