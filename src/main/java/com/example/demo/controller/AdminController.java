@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,16 +14,19 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.model.Activity;
 import com.example.demo.model.Class;
 import com.example.demo.model.ResponseObject;
 import com.example.demo.model.Teacher;
+import com.example.demo.model.Tuition;
 import com.example.demo.service.ActivityService;
 import com.example.demo.service.ClassService;
 import com.example.demo.service.ParentService;
 import com.example.demo.service.TeacherService;
+import com.example.demo.service.TuitionService;
 
 @RestController
 @RequestMapping("/admin")
@@ -36,6 +40,8 @@ public class AdminController {
 	ParentService parentService;
 	@Autowired
 	TeacherService teacherService;
+	@Autowired 
+	TuitionService tuitionService;
 	
 	@PostMapping(path = "/addNewClass")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -160,4 +166,32 @@ public class AdminController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Failed", "No teacher", teacher));
 		}
 	}
+	
+	@PostMapping(path = "/addTuition")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<?> addTuition(@RequestBody List<Tuition> listTuition)
+	{
+		if(tuitionService.addTuition(listTuition))
+		{
+			return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Successful", "Add tuitions successfully", true));
+		}
+		else
+		{
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Failed", "Invalid input", false));
+		}
+	}
+	
+	@PutMapping(path = "/updateTuition")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<?> updateTuition(@RequestBody Tuition tuition) {
+		if(tuitionService.updateTuition(tuition))
+		{
+			return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Successful", "Update tuition successfully", true));
+		}
+		else
+		{
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Failed", "Invalid input", false));
+		}
+	}
+	
 }
