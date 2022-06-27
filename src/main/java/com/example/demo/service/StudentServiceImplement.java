@@ -15,6 +15,7 @@ import com.example.demo.repository.ClassRepository;
 import com.example.demo.repository.ParentRepository;
 import com.example.demo.repository.StudentRepository;
 import com.example.demo.repository.TeacherRepository;
+import com.example.demo.repository.TuitionRepository;
 import com.example.demo.model.Class;
 import com.example.demo.model.Parent;
 
@@ -29,6 +30,8 @@ public class StudentServiceImplement implements StudentService {
 	ParentRepository parentRepository;
 	@Autowired
 	AccountRepository accountRepository;
+	@Autowired
+	TuitionRepository tuitionRepository;
 	public List<Student> getAllStudentInfor() {
 		List<Student> listStudents = studentRepository.findAll();
 		return listStudents;
@@ -117,6 +120,7 @@ public class StudentServiceImplement implements StudentService {
 	}
 	@Override
 	public void deleteStudent(UUID studentID) {
+		tuitionRepository.delete(tuitionRepository.getTuitionByStudentID(studentID));
 		studentRepository.deleteById(studentID);
 	}
 	@Override

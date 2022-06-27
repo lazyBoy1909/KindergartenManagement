@@ -29,6 +29,8 @@ public class Student {
 	private Date dateOfBirth;
 	@Column(name = "student_name")
 	private String studentName;
+	@Column(name = "student_gender")
+	private int studentGender;
 	public UUID getStudentID() {
 		return studentID;
 	}
@@ -59,13 +61,23 @@ public class Student {
 	public void setStudentName(String studentName) {
 		this.studentName = studentName;
 	}
-	public Student(UUID studentID, UUID parentID, UUID classID, Date dateOfBirth, String studentName) {
+	
+	public int getStudentGender() {
+		return studentGender;
+	}
+	public void setStudentGender(int studentGender) {
+		this.studentGender = studentGender;
+	}
+	
+	public Student(UUID studentID, UUID parentID, UUID classID, Date dateOfBirth, String studentName,
+			int studentGender) {
 		super();
 		this.studentID = studentID;
 		this.parentID = parentID;
 		this.classID = classID;
 		this.dateOfBirth = dateOfBirth;
 		this.studentName = studentName;
+		this.studentGender = studentGender;
 	}
 	public Student() {
 		super();
