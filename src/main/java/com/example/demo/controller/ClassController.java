@@ -63,7 +63,7 @@ public class ClassController {
 		}
 		else
 		{
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Failed", "Invalid input", foundClass));
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Failed", "Invalid input", new Class()));
 		}
 	}
 }
