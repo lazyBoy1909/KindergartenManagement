@@ -12,4 +12,5 @@ public interface StudentService {
 	public Student getStudentInfor(UUID studentID);
 	public void deleteStudent(UUID studentID);
 	public Student getChildStudentInfor();
+	public List<Student> getAllStudentsByClassID(UUID classID);
 }

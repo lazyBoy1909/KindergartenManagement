@@ -130,5 +130,15 @@ public class StudentServiceImplement implements StudentService {
     	UUID parentID = accountRepository.getAccountByUsername(username).getUserID();
     	return studentRepository.findStudentByParentID(parentID).get(0);
 	}
+	@Override
+	public List<Student> getAllStudentsByClassID(UUID classID) {
+		try {
+			Class classFound = classRepository.findById(classID).get();
+		} catch(NoSuchElementException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return studentRepository.findStudentByClassID(classID);
+	}
 
 }
