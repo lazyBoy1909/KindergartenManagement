@@ -98,7 +98,7 @@ public class StudentController {
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TEACHER','ROLE_PARENT')")
 	public ResponseEntity<?> getAllStudentsByClassID(@RequestParam("classID") UUID classID) {
 		List<Student> listStudent = studentService.getAllStudentsByClassID(classID);
-		if(listStudent.size() != 0) {
+		if(listStudent != null) {
 			return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Successful", "Students' information", listStudent));
 		} else {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Failed", "Invalid input", null));
