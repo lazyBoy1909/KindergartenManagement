@@ -58,5 +58,9 @@ public class ParentServiceImplement implements ParentService {
 			return null;
 		}
 	}
+	@Override
+	public void addNewParent(Parent parent) {
+		parentRepository.save(parent);
+	}
 
 }

@@ -18,15 +18,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.auth.ApplicationUser;
+import com.example.demo.model.Parent;
 import com.example.demo.model.ResponseObject;
 import com.example.demo.model.Student;
+import com.example.demo.model.Student_Parent;
 import com.example.demo.model.Teacher;
 import com.example.demo.repository.AccountRepository;
 import com.example.demo.repository.TeacherRepository;
+import com.example.demo.service.ParentService;
 import com.example.demo.service.StudentService;
 
 import java.awt.print.Printable;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -36,6 +40,9 @@ public class StudentController {
 
 	@Autowired
 	StudentService studentService;
+	
+	@Autowired
+	ParentService parentService;
 	@GetMapping(path = "/allStudentInfor")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TEACHER')")
 	public ResponseEntity<?> getAllStudentInfor()
@@ -59,8 +66,15 @@ public class StudentController {
 	
 	@PostMapping(path = "/addNewStudent")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TEACHER')")
-	public ResponseEntity<?> addNewStudent(@RequestBody Student student)
+	public ResponseEntity<?> addNewStudent(@RequestBody Student_Parent studentAndParent)
 	{
+		Parent parent = new Parent(studentAndParent.getParentName(), 
+				studentAndParent.getParentDob(), studentAndParent.getParentAddress(), studentAndParent.getParentEmail(), 
+				studentAndParent.getParentGender());
+		parentService.addNewParent(parent);
+		Student student = new Student(UUID.randomUUID(), parent.getParentID(), 
+				studentAndParent.getClassID(), studentAndParent.getDateOfBirth(),studentAndParent.getStudentName(),
+				studentAndParent.getStudentGender());
 		if(studentService.addNewStudent(student))
 		{
 			return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Successful", "Add new student information successfully", true));

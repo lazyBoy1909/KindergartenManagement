@@ -9,4 +9,5 @@ public interface ParentService {
 	public List<Parent> getAllParents();
 	public List<Parent> getParentByClassID(UUID classID);
 	public Parent getParentByID(UUID parentID);
+	public void addNewParent(Parent parent);
 }
