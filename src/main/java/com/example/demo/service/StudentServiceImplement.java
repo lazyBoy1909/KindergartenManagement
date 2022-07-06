@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.Student;
+import com.example.demo.model.Tuition;
 import com.example.demo.repository.AccountRepository;
 import com.example.demo.repository.ClassRepository;
 import com.example.demo.repository.ParentRepository;
@@ -120,7 +121,8 @@ public class StudentServiceImplement implements StudentService {
 	}
 	@Override
 	public void deleteStudent(UUID studentID) {
-		tuitionRepository.delete(tuitionRepository.getTuitionByStudentID(studentID));
+		Tuition tuition = tuitionRepository.getTuitionByStudentID(studentID);
+		if(tuition != null) tuitionRepository.delete(tuitionRepository.getTuitionByStudentID(studentID));
 		studentRepository.deleteById(studentID);
 	}
 	@Override
