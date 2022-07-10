@@ -81,7 +81,7 @@ public class ParentController {
     }
 	
 	@GetMapping(path = "/getParent")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_TEACHER')")
 	public ResponseEntity<?> getParentByID(@RequestParam("parentID") UUID parentID)
 	{
 		Parent parent = parentService.getParentByID(parentID);

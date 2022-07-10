@@ -220,7 +220,7 @@ public class AdminController {
 	}
 	
 	@GetMapping(path = "/getAllTimeTable")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasRole('ROLE_TEACHER')")
 	public ResponseEntity<?> getAllTimeTable()
 	{
 		return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Successful", "All Timetable's information", timeTableService.getAllTimeTable()));

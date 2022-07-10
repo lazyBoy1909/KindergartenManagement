@@ -60,11 +60,18 @@ public class TeacherServiceImplement implements TeacherService {
 		}
 	}
 	@Override
-	public Boolean updateTeacher(UUID teacherID, Teacher teacher) {
+	public Boolean updateTeacher(UUID teacherID, Teacher updateTeacher) {
 		try
 		{
-			Teacher updateTeacher = teacherRepository.findById(teacherID).get();
-			teacherRepository.save(teacher);
+			Teacher oldVersion = teacherRepository.findById(teacherID).get();
+//			oldVersion.setTeacherAddress(updateTeacher.getTeacherAddress());
+//			oldVersion.setTeacherEmail(updateTeacher.getTeacherEmail());
+//			oldVersion.setTeacherDob(updateTeacher.getTeacherDob());
+//			oldVersion.setTeacherGender(updateTeacher.getTeacherGender());
+//			oldVersion.setTeacherName(updateTeacher.getTeacherName());
+//			oldVersion.setSubject(updateTeacher.getSubject());
+//			oldVersion.setTeacherPhoneNumber(updateTeacher.getTeacherPhoneNumber());
+			teacherRepository.save(updateTeacher);
 			return true;
 		}
 		catch(NoSuchElementException e)
