@@ -13,4 +13,6 @@ import com.example.demo.model.Teacher;
 public interface TeacherRepository extends JpaRepository<Teacher, UUID> {
 	@Query(value = "select * from teacher where teacher_id =:teacherID", nativeQuery = true)
 	Teacher getTeacherByID(@Param("teacherID") UUID teacherID);
+
+
 }

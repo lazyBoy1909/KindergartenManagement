@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import static com.example.demo.security.ApplicationUserRole.*;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 
@@ -58,6 +59,8 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 		                config.setAllowedMethods(Collections.singletonList("*"));
 		                config.addAllowedOrigin("*");
 		                config.setAllowCredentials(true);
+                        config.setExposedHeaders(Arrays.asList("Access-Control-Allow-Headers", "Authorization, x-xsrf-token, Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, " +
+                                "Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"));
 		                return config;
 					}
 		        })
