@@ -1,6 +1,5 @@
 package com.example.demo;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -13,15 +12,15 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
 
 import com.example.demo.model.Class;
 import com.example.demo.repository.ClassRepository;
 import com.example.demo.service.ClassServiceImplement;
 
-import ch.qos.logback.core.boolex.Matcher;
-
 @SpringBootTest
-class DemoApplicationTests {
+@ContextConfiguration
+class ClassServiceTest {
 
 	@Mock
 	ClassRepository classRepository;
@@ -30,7 +29,7 @@ class DemoApplicationTests {
 	ClassServiceImplement classServiceImplement;
 	
 	@Test
-	void contextLoads() {
+	void testGetAllClass() {
 		List<Class> mockClass = new ArrayList<>();
 		for (int i=0; i< 5; i++) {
 			mockClass.add(new Class(UUID.randomUUID(), "test" + i, UUID.randomUUID()));
