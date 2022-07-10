@@ -27,6 +27,7 @@ import com.example.demo.service.ActivityService;
 import com.example.demo.service.ClassService;
 import com.example.demo.service.ParentService;
 import com.example.demo.service.TeacherService;
+import com.example.demo.service.TimeTableService;
 import com.example.demo.service.TuitionService;
 
 @RestController
@@ -43,7 +44,8 @@ public class AdminController {
 	TeacherService teacherService;
 	@Autowired 
 	TuitionService tuitionService;
-	
+	@Autowired
+	TimeTableService timeTableService;
 	class NumberOfStudent {
 		int numberOfStudent;
 
@@ -215,6 +217,13 @@ public class AdminController {
 		{
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Failed", "Invalid input", false));
 		}
+	}
+	
+	@GetMapping(path = "/getAllTimeTable")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<?> getAllTimeTable()
+	{
+		return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Successful", "All Timetable's information", timeTableService.getAllTimeTable()));
 	}
 	
 }
