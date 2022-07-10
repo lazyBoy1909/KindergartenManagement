@@ -82,5 +82,14 @@ public class Student {
 	public Student() {
 		super();
 	}
+	public Student(UUID parentID, UUID classID, Date dateOfBirth, String studentName, int studentGender) {
+		super();
+		this.parentID = parentID;
+		this.classID = classID;
+		this.dateOfBirth = dateOfBirth;
+		this.studentName = studentName;
+		this.studentGender = studentGender;
+	}
+	
 	
 }

@@ -122,5 +122,16 @@ public class Parent {
 	public Parent() {
 		super();
 	}
+
+
+
+	public Parent(String parentName, Date parentDob, String parentAddress, String parentEmail, int parentGender) {
+		super();
+		this.parentName = parentName;
+		this.parentDob = parentDob;
+		this.parentAddress = parentAddress;
+		this.parentEmail = parentEmail;
+		this.parentGender = parentGender;
+	}
 	
 }

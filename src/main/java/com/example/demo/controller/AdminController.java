@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -42,6 +43,24 @@ public class AdminController {
 	TeacherService teacherService;
 	@Autowired 
 	TuitionService tuitionService;
+	
+	class NumberOfStudent {
+		int numberOfStudent;
+
+		public NumberOfStudent(int numberOfStudent) {
+			super();
+			this.numberOfStudent = numberOfStudent;
+		}
+
+		public int getNumberOfStudent() {
+			return numberOfStudent;
+		}
+
+		public void setNumberOfStudent(int numberOfStudent) {
+			this.numberOfStudent = numberOfStudent;
+		}
+		
+	}
 	
 	@PostMapping(path = "/addNewClass")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -157,13 +176,17 @@ public class AdminController {
 	public ResponseEntity<?> getTeacher(@RequestParam("teacherID") UUID teacherID)
 	{
 		Teacher teacher = teacherService.getTeacher(teacherID);
+		int numberOfStudent = teacherService.numberOfStudent(teacherID);
+		List<Object> result = new ArrayList<Object>();
+		result.add(teacher);
+		result.add(new NumberOfStudent(numberOfStudent));
 		if(teacher != null)
 		{
-			return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Successful", "Teacher's information", teacher));
+			return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Successful", "Teacher's information", result));
 		}
 		else
 		{
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Failed", "No teacher", teacher));
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Failed", "No teacher", result));
 		}
 	}
 	

@@ -75,7 +75,9 @@ public class TeacherServiceImplement implements TeacherService {
 	}
 	@Override
 	public int numberOfStudent(UUID teacherID) {
-		Class foundClass = classRepository.getClassIDByTeacherID(teacherID).get(0);
+		List<Class> listClasses = classRepository.getClassIDByTeacherID(teacherID);
+		if(listClasses.size() == 0) return 0;
+		Class foundClass = listClasses.get(0);
 		System.out.println(foundClass.getClassName());
 		List<Student> listStudents = studentRepository.findStudentByClassID(foundClass.getClassID());
 		return listStudents.size();
