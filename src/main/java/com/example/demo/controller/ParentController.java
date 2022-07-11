@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -94,6 +95,16 @@ public class ParentController {
 		{
         	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Failed", "Invalid input ", parent));
 
+		}
+	}
+	
+	@PutMapping(path = "updateParent")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_TEACHER')")
+	public ResponseEntity<?> updateParent(@RequestBody Parent parent) {
+		if(parentService.updateParent(parent)) {
+			return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Successful", "Update parent's information successfully ", true));
+		} else {
+        	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Failed", "Invalid input ", false));
 		}
 	}
 }
