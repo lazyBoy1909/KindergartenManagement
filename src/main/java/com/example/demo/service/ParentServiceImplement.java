@@ -66,7 +66,7 @@ public class ParentServiceImplement implements ParentService {
 	}
 	@Override
 	public Boolean updateParent(Parent parent) {
-		if(parent.getParentDob().getTime() < System.currentTimeMillis()) {
+		if(parent.getParentDob().getTime() > System.currentTimeMillis()) {
 			return false;
 		}
 		

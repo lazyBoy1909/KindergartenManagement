@@ -31,9 +31,11 @@ public class TuitionServiceImplement implements TuitionService {
     	Authentication userDetails = (Authentication) SecurityContextHolder.getContext().getAuthentication();
     	String username = userDetails.getName();
     	UUID parentID = accountRepository.getAccountByUsername(username).getUserID();
-    	Student student =  studentRepository.findStudentByParentID(parentID).get(0);
-    	System.out.print(student.getStudentName());
-		return tuitionRepository.getTuitionByStudentID(student.getStudentID());
+    	List<Student> listStudent =  studentRepository.findStudentByParentID(parentID);
+    	if(listStudent.size() == 0 || listStudent == null) return null;
+    	else {
+    		return tuitionRepository.getTuitionByStudentID(listStudent.get(0).getStudentID());
+    	}
 	}
 
 	@Override
