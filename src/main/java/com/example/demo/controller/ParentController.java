@@ -19,6 +19,7 @@ import com.example.demo.model.Email;
 import com.example.demo.model.Parent;
 import com.example.demo.model.ResponseObject;
 import com.example.demo.model.Student;
+import com.example.demo.model.TimeTable;
 import com.example.demo.model.Tuition;
 import com.example.demo.service.EmailService;
 import com.example.demo.service.ParentService;
@@ -37,6 +38,7 @@ public class ParentController {
 	StudentService studentService;
 	@Autowired
 	ParentService parentService;
+	
 	@GetMapping(path = "/getTuition")
 	@PreAuthorize("hasRole('ROLE_PARENT')")
 	public ResponseEntity<?> getTuition()
@@ -69,7 +71,7 @@ public class ParentController {
 	
 	@PostMapping(path = "/emails")
 	@PreAuthorize("hasRole('ROLE_PARENT')")
-    public ResponseEntity<?> sendEmail(@RequestBody Email email)
+    public ResponseEntity<?> sendEmail(@RequestBody String email)
     {
     	if(emailService.sendEmailForParent(email))
     	{

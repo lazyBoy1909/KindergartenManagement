@@ -53,20 +53,19 @@ public class EmailServiceImplement implements EmailService {
 		}
 	}
 	@Override
-	public Boolean sendEmailForParent(Email email) {
+	public Boolean sendEmailForParent(String email) {
     	Authentication userDetails = (Authentication) SecurityContextHolder.getContext().getAuthentication();
     	String username = userDetails.getName();
     	UUID parentID = accountRepository.getAccountByUsername(username).getUserID();
     	Student student = studentRepository.findStudentByParentID(parentID).get(0);
     	Class findClass = classRepository.getClassByStudentID(student.getStudentID());
-    	System.out.println(findClass.getClassID());
     	Teacher teacher = teacherRepository.getTeacherByID(findClass.getTeacherID());
     	System.out.println(teacher.getTeacherName());
 		try {
 			SimpleMailMessage mailMessage = new SimpleMailMessage();
 			mailMessage.setTo(teacher.getTeacherEmail());
-			mailMessage.setText(email.getMessage());
-			mailMessage.setSubject(email.getSenderEmail());
+			mailMessage.setText(email);
+			mailMessage.setSubject(teacher.getTeacherEmail());
 			javaMailSender.send(mailMessage);
 			return true;
 		}
