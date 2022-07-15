@@ -184,23 +184,15 @@ public class StudentServiceTest {
     @Test
     void testDeleteAStudent(){
         Student std = new Student();
+        List<Tuition> tuitionList = new ArrayList<Tuition>();
         std.setStudentID(UUID.fromString("c509be7e-db3e-4c0e-8545-5762a60f1d59"));
         std.setStudentName("test");
 
-        when(tuitionRepository.getTuitionByStudentID(std.getStudentID())).thenReturn(new Tuition());
+        when(tuitionRepository.getTuitionByStudentID(std.getStudentID())).thenReturn(tuitionList);
 
         studentServiceImplement.deleteStudent(std.getStudentID());
         verify(studentRepository).deleteById(std.getStudentID());
     }
 
 
-    // @Test
-    // void should_throw_exception_when_user_doesnt_exist() {
-    //     Student std = new Student();
-    //     std.setStudentID(UUID.fromString("c509be7e-db3e-4c0e-8545-5762a60f1d59"));
-    //     std.setStudentName("test");
-
-    //     given(userRepository.findById(anyLong())).willReturn(Optional.ofNullable(null));
-    //     deleteUserService.deleteUser(user.getId());
-    // }
 }
