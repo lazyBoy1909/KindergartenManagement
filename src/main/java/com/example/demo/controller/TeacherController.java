@@ -124,7 +124,7 @@ public class TeacherController {
     	}
     	else
     	{
-        	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Successful", "List Parent in class ", false));
+        	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Failed", "Failed to send email ", false));
 
     	}
     }

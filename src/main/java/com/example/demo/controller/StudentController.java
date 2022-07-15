@@ -43,7 +43,7 @@ public class StudentController {
 	
 	@Autowired
 	ParentService parentService;
-	@GetMapping(path = "/allStudentInfor")
+		@GetMapping(path = "/allStudentInfor")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_TEACHER')")
 	public ResponseEntity<?> getAllStudentInfor()
 	{

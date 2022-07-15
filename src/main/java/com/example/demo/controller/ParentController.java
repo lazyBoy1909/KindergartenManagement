@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,7 +41,7 @@ public class ParentController {
 	@PreAuthorize("hasRole('ROLE_PARENT')")
 	public ResponseEntity<?> getTuition()
 	{
-		Tuition tuition = tuitionService.getTuitionByStudentID();
+		List<Tuition> tuition = tuitionService.getTuitionByStudentID();
 		if(tuition == null)
 		{
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Failed", "Invalid input", tuition));
@@ -81,7 +83,7 @@ public class ParentController {
     }
 	
 	@GetMapping(path = "/getParent")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_TEACHER')")
 	public ResponseEntity<?> getParentByID(@RequestParam("parentID") UUID parentID)
 	{
 		Parent parent = parentService.getParentByID(parentID);
@@ -94,6 +96,16 @@ public class ParentController {
 		{
         	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Failed", "Invalid input ", parent));
 
+		}
+	}
+	
+	@PutMapping(path = "updateParent")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_TEACHER')")
+	public ResponseEntity<?> updateParent(@RequestBody Parent parent) {
+		if(parentService.updateParent(parent)) {
+			return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Successful", "Update parent's information successfully ", true));
+		} else {
+        	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Failed", "Invalid input ", false));
 		}
 	}
 }

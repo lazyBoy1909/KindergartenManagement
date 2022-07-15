@@ -7,12 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.model.Activity;
 import com.example.demo.model.ResponseObject;
@@ -72,6 +67,20 @@ public class ActivityController {
 		{
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Failed", "Invalid input", activity));
 
+		}
+	}
+	
+	@PutMapping(path = "/updateActivity")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<?> updateActivity(@RequestBody Activity newActivity)
+	{
+		if(activityService.updateActivity(newActivity))
+		{
+			return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Successful", "update activity successfully", true));
+		}
+		else
+		{
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Failed", "Invalid input", false));
 		}
 	}
 }

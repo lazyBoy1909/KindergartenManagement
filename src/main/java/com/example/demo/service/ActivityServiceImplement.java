@@ -53,5 +53,16 @@ public class ActivityServiceImplement implements ActivityService {
 			return null;
 		}
 	}
+	@Override
+	public Boolean updateActivity(Activity activity) {
+		try {
+			Activity foundActivity = activityRepository.findById(activity.getActivityID()).get();
+		} catch(NoSuchElementException e) {
+			e.printStackTrace();
+			return false;
+		}
+		activityRepository.save(activity);
+		return true;
+	}
 
 }

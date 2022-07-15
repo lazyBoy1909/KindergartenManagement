@@ -72,4 +72,9 @@ public class TimeTableServiceImplement implements TimeTableService {
 		timeTableRepository.delete(deleteTimeTable);
 		return true;
 	}
+
+	@Override
+	public List<TimeTable> getAllTimeTable() {
+		return timeTableRepository.findAll();
+	}
 }

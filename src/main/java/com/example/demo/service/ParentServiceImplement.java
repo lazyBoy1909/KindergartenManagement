@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.UUID;
@@ -61,6 +63,22 @@ public class ParentServiceImplement implements ParentService {
 	@Override
 	public void addNewParent(Parent parent) {
 		parentRepository.save(parent);
+	}
+	@Override
+	public Boolean updateParent(Parent parent) {
+		if(parent.getParentDob().getTime() > System.currentTimeMillis()) {
+			return false;
+		}
+		
+		try {
+			Parent foundParent = parentRepository.findById(parent.getParentID()).get();
+		} catch(NoSuchElementException e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+		parentRepository.save(parent);
+		return true;
 	}
 
 }

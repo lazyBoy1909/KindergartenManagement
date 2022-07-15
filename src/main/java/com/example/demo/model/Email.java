@@ -11,7 +11,6 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
-@Table(name = "email")
 public class Email {
 	@Id
     @GeneratedValue(generator = "UUID")

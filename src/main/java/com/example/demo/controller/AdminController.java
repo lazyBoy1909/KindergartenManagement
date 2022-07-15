@@ -26,7 +26,9 @@ import com.example.demo.model.Tuition;
 import com.example.demo.service.ActivityService;
 import com.example.demo.service.ClassService;
 import com.example.demo.service.ParentService;
+import com.example.demo.service.StudentService;
 import com.example.demo.service.TeacherService;
+import com.example.demo.service.TimeTableService;
 import com.example.demo.service.TuitionService;
 
 @RestController
@@ -43,7 +45,10 @@ public class AdminController {
 	TeacherService teacherService;
 	@Autowired 
 	TuitionService tuitionService;
-	
+	@Autowired
+	TimeTableService timeTableService;
+	@Autowired
+	StudentService studentService;
 	class NumberOfStudent {
 		int numberOfStudent;
 
@@ -59,6 +64,37 @@ public class AdminController {
 		public void setNumberOfStudent(int numberOfStudent) {
 			this.numberOfStudent = numberOfStudent;
 		}
+	}
+	
+	class TuitionInfo {
+		int month;
+		String studentName;
+		Double tuitionFee;
+		public int getMonth() {
+			return month;
+		}
+		public void setMonth(int month) {
+			this.month = month;
+		}
+		public String getStudentName() {
+			return studentName;
+		}
+		public void setStudentName(String studentName) {
+			this.studentName = studentName;
+		}
+		public Double getTuitionFee() {
+			return tuitionFee;
+		}
+		public void setTuitionFee(Double tuitionFee) {
+			this.tuitionFee = tuitionFee;
+		}
+		public TuitionInfo(int month, String studentName, Double tuitionFee) {
+			super();
+			this.month = month;
+			this.studentName = studentName;
+			this.tuitionFee = tuitionFee;
+		}
+		
 		
 	}
 	
@@ -217,4 +253,34 @@ public class AdminController {
 		}
 	}
 	
+	@GetMapping(path = "/getAllTimeTable")
+	@PreAuthorize("hasRole('ROLE_TEACHER')")
+	public ResponseEntity<?> getAllTimeTable()
+	{
+		return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Successful", "All Timetable's information", timeTableService.getAllTimeTable()));
+	}
+	
+	@GetMapping(path = "/getAllTuition")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<?> getAllTuition() {
+		return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Successful", "Get all tuition's information successfully", tuitionService.getAllTuition()));
+
+	}
+	
+	@GetMapping(path = "/getTuition")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<?> getTuition(@RequestParam("studentID") UUID studentID) {
+		List<Tuition> listTuitions = tuitionService.getTuition(studentID);
+		if(listTuitions == null || listTuitions.size() == 0) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Failed", "Invalid input", listTuitions));
+		}
+		List<TuitionInfo> tuitionInfos = new ArrayList<TuitionInfo>();
+		for(int i = 0; i<listTuitions.size();i++) {
+			UUID studentIDTuiTion = listTuitions.get(0).getStudentID();
+			String studentName = studentService.getStudentInfor(studentIDTuiTion).getStudentName();
+			tuitionInfos.add(new TuitionInfo(listTuitions.get(i).getMonth(),studentName, listTuitions.get(i).getTuitionFee()));
+		}
+		return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Successful", "Get student's tuition successfully", tuitionInfos));
+
+	}
 }

@@ -121,8 +121,8 @@ public class StudentServiceImplement implements StudentService {
 	}
 	@Override
 	public void deleteStudent(UUID studentID) {
-		Tuition tuition = tuitionRepository.getTuitionByStudentID(studentID);
-		if(tuition != null) tuitionRepository.delete(tuitionRepository.getTuitionByStudentID(studentID));
+		Tuition tuition = tuitionRepository.getTuitionByStudentID(studentID).get(0);
+		if(tuition != null) tuitionRepository.delete(tuition);
 		studentRepository.deleteById(studentID);
 	}
 	@Override
@@ -130,7 +130,10 @@ public class StudentServiceImplement implements StudentService {
     	Authentication userDetails = (Authentication) SecurityContextHolder.getContext().getAuthentication();
     	String username = userDetails.getName();
     	UUID parentID = accountRepository.getAccountByUsername(username).getUserID();
-    	return studentRepository.findStudentByParentID(parentID).get(0);
+    	List<Student> listStudents = studentRepository.findStudentByParentID(parentID);
+    	if(listStudents != null && listStudents.size() > 0) {
+    		return listStudents.get(0);
+    	} else return null;
 	}
 	@Override
 	public List<Student> getAllStudentsByClassID(UUID classID) {

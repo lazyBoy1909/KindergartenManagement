@@ -10,4 +10,5 @@ public interface TimeTableService {
 	public Boolean addNewTimeTable(TimeTable newTimeTable);
 	public Boolean changeTimeTable(TimeTable timeTable);
 	public Boolean deleteTimeTable(UUID timeTableID);
+	public List<TimeTable> getAllTimeTable();
 }
