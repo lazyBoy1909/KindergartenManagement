@@ -69,4 +69,9 @@ public class TuitionServiceImplement implements TuitionService {
 		return true;
 	}
 
+	@Override
+	public List<Tuition> getAllTuition() {
+		return tuitionRepository.findAll();
+	}
+
 }

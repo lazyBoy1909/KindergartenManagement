@@ -9,4 +9,5 @@ public interface TuitionService {
 	public Tuition getTuitionByStudentID();
 	public Boolean addTuition(List<Tuition> listTuition);
 	public Boolean updateTuition(Tuition tuition);
+	public List<Tuition> getAllTuition();
 }

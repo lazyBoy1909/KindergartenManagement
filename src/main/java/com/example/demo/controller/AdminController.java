@@ -226,4 +226,11 @@ public class AdminController {
 		return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Successful", "All Timetable's information", timeTableService.getAllTimeTable()));
 	}
 	
+	@GetMapping(path = "getAllTuition")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<?> getAllTuition() {
+		return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Successful", "Get all tuition's information successfully", tuitionService.getAllTuition()));
+
+	}
+	
 }
