@@ -6,8 +6,9 @@ import java.util.UUID;
 import com.example.demo.model.Tuition;
 
 public interface TuitionService {
-	public Tuition getTuitionByStudentID();
+	public List<Tuition> getTuitionByStudentID();
 	public Boolean addTuition(List<Tuition> listTuition);
 	public Boolean updateTuition(Tuition tuition);
 	public List<Tuition> getAllTuition();
+	public List<Tuition> getTuition(UUID studentID);
 }

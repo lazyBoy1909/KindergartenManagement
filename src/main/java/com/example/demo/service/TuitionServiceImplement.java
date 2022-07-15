@@ -27,7 +27,7 @@ public class TuitionServiceImplement implements TuitionService {
 	StudentRepository studentRepository;
 	
 	@Override
-	public Tuition getTuitionByStudentID() {
+	public List<Tuition> getTuitionByStudentID() {
     	Authentication userDetails = (Authentication) SecurityContextHolder.getContext().getAuthentication();
     	String username = userDetails.getName();
     	UUID parentID = accountRepository.getAccountByUsername(username).getUserID();
@@ -72,6 +72,11 @@ public class TuitionServiceImplement implements TuitionService {
 	@Override
 	public List<Tuition> getAllTuition() {
 		return tuitionRepository.findAll();
+	}
+
+	@Override
+	public List<Tuition> getTuition(UUID studentID) {
+		return tuitionRepository.getTuitionByStudentID(studentID);
 	}
 
 }

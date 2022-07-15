@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class ParentController {
 	@PreAuthorize("hasRole('ROLE_PARENT')")
 	public ResponseEntity<?> getTuition()
 	{
-		Tuition tuition = tuitionService.getTuitionByStudentID();
+		List<Tuition> tuition = tuitionService.getTuitionByStudentID();
 		if(tuition == null)
 		{
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Failed", "Invalid input", tuition));
