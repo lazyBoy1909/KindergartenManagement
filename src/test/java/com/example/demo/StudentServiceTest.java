@@ -187,7 +187,7 @@ public class StudentServiceTest {
         std.setStudentID(UUID.fromString("c509be7e-db3e-4c0e-8545-5762a60f1d59"));
         std.setStudentName("test");
 
-        when(tuitionRepository.getTuitionByStudentID(std.getStudentID())).thenReturn(new Tuition());
+        when(tuitionRepository.getTuitionByStudentID(std.getStudentID()))).thenReturn(new Tuition());
 
         studentServiceImplement.deleteStudent(std.getStudentID());
         verify(studentRepository).deleteById(std.getStudentID());

@@ -70,6 +70,7 @@ public class AdminController {
 		int month;
 		String studentName;
 		Double tuitionFee;
+		UUID tuitionID;
 		public int getMonth() {
 			return month;
 		}
@@ -88,12 +89,20 @@ public class AdminController {
 		public void setTuitionFee(Double tuitionFee) {
 			this.tuitionFee = tuitionFee;
 		}
-		public TuitionInfo(int month, String studentName, Double tuitionFee) {
+		public UUID getTuitionID() {
+			return tuitionID;
+		}
+		public void setTuitionID(UUID tuitionID) {
+			this.tuitionID = tuitionID;
+		}
+		public TuitionInfo(int month, String studentName, Double tuitionFee, UUID tuitionID) {
 			super();
 			this.month = month;
 			this.studentName = studentName;
 			this.tuitionFee = tuitionFee;
+			this.tuitionID = tuitionID;
 		}
+		
 		
 		
 	}
@@ -278,7 +287,7 @@ public class AdminController {
 		for(int i = 0; i<listTuitions.size();i++) {
 			UUID studentIDTuiTion = listTuitions.get(0).getStudentID();
 			String studentName = studentService.getStudentInfor(studentIDTuiTion).getStudentName();
-			tuitionInfos.add(new TuitionInfo(listTuitions.get(i).getMonth(),studentName, listTuitions.get(i).getTuitionFee()));
+			tuitionInfos.add(new TuitionInfo(listTuitions.get(i).getMonth(),studentName, listTuitions.get(i).getTuitionFee(), listTuitions.get(i).getTuitionID()));
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Successful", "Get student's tuition successfully", tuitionInfos));
 
