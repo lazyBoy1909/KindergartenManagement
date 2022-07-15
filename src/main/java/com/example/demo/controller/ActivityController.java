@@ -69,4 +69,18 @@ public class ActivityController {
 
 		}
 	}
+	
+	@PutMapping(path = "/updateActivity")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public ResponseEntity<?> updateActivity(@RequestBody Activity newActivity)
+	{
+		if(activityService.updateActivity(newActivity))
+		{
+			return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Successful", "update activity successfully", true));
+		}
+		else
+		{
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Failed", "Invalid input", false));
+		}
+	}
 }

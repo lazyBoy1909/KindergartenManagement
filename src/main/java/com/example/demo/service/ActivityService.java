@@ -10,4 +10,5 @@ public interface ActivityService {
 	public Boolean deleteActivity(UUID activityID);
 	public List<Activity> getActivity();
 	public Activity getActivityByID(UUID activityID);
+	public Boolean updateActivity(Activity activity);
 }
