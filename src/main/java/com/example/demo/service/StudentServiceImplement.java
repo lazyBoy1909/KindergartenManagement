@@ -123,9 +123,9 @@ public class StudentServiceImplement implements StudentService {
 	public void deleteStudent(UUID studentID) {
 		List<Tuition> listTuition = tuitionRepository.getTuitionByStudentID(studentID);
 		if(listTuition != null && listTuition.size() > 0) {
-			tuitionRepository.delete(listTuition.get(0));
-			studentRepository.deleteById(studentID);
+			tuitionRepository.delete(listTuition.get(0));	
 		}
+		studentRepository.deleteById(studentID);
 	}
 	@Override
 	public Student getChildStudentInfor() {
